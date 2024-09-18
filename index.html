@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spaiyaz FF - Diamond Top-up</title>
+    <style>
+        /* Styles remain the same as you provided */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: yellow ;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 0;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: 2.5px;
+        }
+        .content {
+            padding: 40px 20px;
+            animation: fadeIn 3s ease;
+        }
+        .topup-button {
+            padding: 15px 30px;
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .topup-button:hover {
+            background-color: #cc7a00;
+            transform: scale(1.05);
+        }
+        .form-container, .thank-you, .transaction {
+            display: none;
+        }
+        .contact-info {
+            margin-top: 50px;
+            padding: 20px 0;
+            background-color: #1e1e1e;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Spaiyaz FF</h1>
+    </header>
+
+    <div class="content">
+        <h2>Welcome to Spaiyaz FF Diamond Top-up!</h2>
+        <button class="topup-button" onclick="showTopUpForm()">UID Top-up</button>
+    </div>
+
+    <!-- Top-up Form Section -->
+    <div class="form-container">
+        <h3>Select your top-up amount:</h3>
+        <form id="topupForm">
+            <select name="diamond_amount" id="diamond_amount" required>
+                <!-- Diamond options -->
+                <option value="">Select amount</option>
+                <option value="25💎 - 23 BDT">25💎 - 23 BDT/-</option>
+                <option value="50💎 - 38 BDT">50💎 - 38 BDT/-</option>
+                <option value="115💎 - 75 BDT">115💎 - 75 BDT/-</option>
+                <option value="240💎 - 145 BDT">240💎 - 145 BDT/-</option>
+                <option value="610💎 - 370 BDT">610💎 - 370 BDT/-</option>
+                <option value="1240💎 - 725 BDT">1240💎 - 725 BDT/-</option>
+                <option value="2530💎 - 1440 BDT">2530💎 - 1440 BDT/-</option>
+                <option value="5060💎 - 2880 BDT">5060💎 - 2880 BDT/-</option>
+                <option value="7590💎 - 4320 BDT">7590💎 - 4320 BDT/-</option>
+                <option value="10120💎 - 5760 BDT">10120💎 - 5760 BDT/-</option>
+                <option value="12650💎 - 7200 BDT">12650💎 - 7200 BDT/-</option>
+                <option value="Weekly Lite(90💎) - 38 BDT">Weekly Lite(90💎) - 38 BDT/-</option>
+                <option value="Weekly Membership(445💎) - 145 BDT">Weekly Membership(445💎) - 145 BDT/-</option>
+                <option value="Monthly Membership(2500💎) - 725 BDT">Monthly Membership(2500💎) - 725 BDT/-</option>
+                <option value="Level up pass (800💎[Only 30 level players can achieve it]) - 147 BDT">Level up pass (800💎[Only 30 level players can achieve it]) - 147 BDT/-</option>
+            </select>
+            <br><br>
+            <label for="customRequest">Which one do you want to buy?</label>
+            <input type="text" id="customRequest" name="customRequest" required>
+            <br><br>
+            <button type="button" onclick="submitTopUp()">Submit</button>
+        </form>
+    </div>
+
+    <!-- Transaction Section -->
+    <div class="transaction">
+        <h3>Enter Transaction Details</h3>
+        <form id="transactionForm">
+            <label for="transactionId">Transaction ID (bKash: 01892929202992292992922993384875829101020984857574839202039485858483929292001202939485757844939292001923984857575848585858585858585858585858474737272727)</label>
+            <input type="text" id="transactionId" name="transactionId" required>
+            <br><br>
+            <label for="bkashLast4">Last 4 digits of bKash</label>
+            <input type="text" id="bkashLast4" name="bkashLast4" required>
+            <br><br>
+            <button type="button" onclick="submitTransaction()">Submit</button>
+        </form>
+    </div>
+
+    <!-- Thank You Section -->
+    <div class="thank-you">
+        <h3>Thanks for shopping from us!</h3>
+    </div>
+
+    <footer>
+        <p>©️ 2024 by Spaiyaz FF</p>
+        <p><a href="https://youtube.com/@spaiyazff?si=Fntzm1cobvqWNjEQ" target="_blank">MY YOUTUBE CHANNEL!</a></p>
+    </footer>
+
+    <!-- Include EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
+        })();
+
+        function showTopUpForm() {
+            document.querySelector('.content').style.display = 'none';
+            document.querySelector('.form-container').style.display = 'block';
+        }
+
+        function submitTopUp() {
+            var diamondAmount = document.getElementById('diamond_amount').value;
+            var customRequest = document.getElementById('customRequest').value;
+
+            if(diamondAmount && customRequest) {
+                alert('Your top-up request has been submitted! Please enter your transaction details.');
+
+                document.querySelector('.form-container').style.display = 'none';
+                document.querySelector('.transaction').style.display = 'block';
+            } else {
+                alert('Please fill out the form completely.');
+            }
+        }
+
+        function submitTransaction() {
+            var transactionId = document.getElementById('transactionId').value;
+            var bkashLast4 = document.getElementById('bkashLast4').value;
+
+            if(transactionId && bkashLast4) {
+                // Prepare the email content using EmailJS
+                emailjs.send("service_id", "template_id", {
+                    diamond_amount: document.getElementById('diamond_amount').value,
+                    custom_request: document.getElementById('customRequest').value,
+                    transaction_id: transactionId,
+                    bkash_last4: bkashLast4
+                }).then(function(response) {
+                    alert('Your transaction details have been submitted and sent to our team!');
+                }, function(error) {
+                    alert('Failed to submit the form, please try again.');
+                });
+
+                document.querySelector('.transaction').style.display = 'none';
+                document.querySelector('.thank-you').style.display = 'block';
+            } else {
+                alert('Please fill out the transaction details.');
+            }
+        }
+    </script>
+</body>
+</html>
